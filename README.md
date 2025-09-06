@@ -1,9 +1,9 @@
-# RAICOM_Unitree2025
+# RAICOM_Unitree2025_ECNU
 [![Platform](https://img.shields.io/badge/Platform-Linux-orange)]()
 [![Python](https://img.shields.io/badge/Python-3.10--3.12-blue)]()
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)]()
 ## 💡Introduction
-2025RAICOM四组多模态赛道 **RAICOM_Unitree2025**, 项目采用Unitree Go2，幻尔机械臂
+2025RAICOM四组多模态赛道 **RAICOM_Unitree2025**, 项目采用Unitree Go2、幻尔机械臂，适用于一切六轴机械臂。
 
 > ⚠️ **注意**：本项目仅支持 **Linux (Ubuntu 20.04/22.04)** 环境，请不要在 Windows 下直接运行。
 
@@ -55,7 +55,7 @@ RAI_Dog/
 
 ---
 
-## 🚀 Quick start
+## 🚀 Quick Start
 
 ### 1. 克隆仓库
 ```bash
@@ -91,3 +91,13 @@ python RAI_Dog/src/Run_crossing1.py
 ```powershell
 python RAI_Dog/src/Check_detector.py
 ```
+
+## 📑 Reference
+
+### 1. 赛项规则
+
+完整的赛事规则请参考：[四组多模态巡检赛项规则文件](./四组多模态巡检赛项规则文件.pdf)
+
+### 2. 报告材料
+
+省赛/国赛报告材料请参考：[省赛报告材料](./睿抗-物资运送-萝卜快跑-省赛-报告材料.pdf) / [国赛报告材料](./睿抗-物资运送-萝卜快跑-国赛-报告材料.pdf)

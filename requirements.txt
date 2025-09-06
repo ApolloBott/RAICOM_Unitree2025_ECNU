@@ -1,0 +1,6 @@
+matplotlib==3.10.6
+numpy==2.3.2
+opencv_python==4.11.0.86
+pyserial==3.5
+readchar==4.2.1
+simple_pid==2.0.1

@@ -76,7 +76,64 @@ conda activate raicom
 pip install -r requirements.txt
 ```
 
-### 3. 运行实例
+### 3. udev 规则配置
+- 我们使用Orin Nano作为Unitree Go2的外接电脑。外接3个TOF200F激光测距模块，机械臂通过tty转USB连接到Orin。
+
+#### 步骤1. 查询串口型号(将ttyCH343USB0替换为你需要查询的串口)：
+```powershell
+udevadm info -a -n /dev/ttyCH343USB0 | egrep -i "idVendor|idProduct|serial|KERNELS|product|manufacturer" -m 5
+```
+- 预计输出类似于：
+```powershell
+KERNELS=="1-2.2.1:1.0'
+KERNELS=="1-2.2.1"
+ATTRS{idProduct}=="55d3"
+ATTRS{idVendor}=="1a86"
+ATTRS{serial}=="5959048178'
+```
+
+#### 步骤2. 创建规则文件
+```powershell
+sudoedit /etc/udev/rules.d/99-x9x-serial.rules
+```
+
+#### 步骤3. 编辑udev规则
+示例：
+```powershell
+KERNEL=="ttyCH343USB[0-9]*", MODE:="0660", GROUP:="dialout"
+SUBSYSTEM=="tty", KERNEL=="ttyCH343USB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5959048178", SYMLINK+="detector0"
+```
+将具体的设备指纹换成**步骤1**中的输出，SYLINK是符号链接名，可以自行更改。
+
+
+#### 步骤4. 保存并加载（记得可能要重新插拔串口）：
+```powershell
+sudo udevadm control --reload-rules && udevadm trigger
+```
+
+将用户添加到dialout组（可选）：
+```powershell
+sudo usermod -aG dialout 用户名
+```
+
+后期若要查找设备的符号链接，可以使用：
+```powershell
+find /dev -type l -lname "video*"
+```
+也可以直接使用`ls`，比如:
+```powershell
+ls -l /dev/arm
+```
+
+- 💡注意：
+本项目中机械臂ttyUSB0 <-> arm，
+机械臂6号舵机处测距ttyCH343USB0 <-> detector0，
+机械臂2号舵机处测距ttyCH343USB1 <-> detector1，
+机器狗右测距ttyCH343USB2 <-> right
+- 具体测距传感器的分布及功能可以参考[省赛 / 国赛报告材料](./睿抗-物资运送-萝卜快跑-国赛-报告材料.pdf)
+
+
+### 4. 运行实例
 - 运行机械臂示例
 ```powershell
 python RAI_Dog/src/ArmControl.py
